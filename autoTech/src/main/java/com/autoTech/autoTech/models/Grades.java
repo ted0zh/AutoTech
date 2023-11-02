@@ -21,4 +21,8 @@ public class Grades {
 
     public void setServiceGrade(Double serviceGrade) {this.serviceGrade = serviceGrade;}
 
+    public Grades(Long id, Double serviceGrade) {
+        this.id = id;
+        this.serviceGrade = serviceGrade;
+    }
 }
