@@ -18,12 +18,12 @@ public class AutoShopController {
     public AutoShopController(AutoShopService autoShopService) {
         this.autoShopService = autoShopService;
     }
-    @GetMapping("/fetch/autoShop")
+    @GetMapping("/fetch")
     public List<AutoShop> fetchAutoShops() {
         return autoShopService.getAllShops();
     }
-    @PostMapping("/save/autoShop")
-    public ResponseEntity<?> saveService(@RequestBody AutoShopDto autoShopDto) {
+    @PostMapping("/save")
+    public ResponseEntity<?> saveAutoShop(@RequestBody AutoShopDto autoShopDto) {
         AutoShop savedInDb = autoShopService.saveShop(autoShopDto);
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
