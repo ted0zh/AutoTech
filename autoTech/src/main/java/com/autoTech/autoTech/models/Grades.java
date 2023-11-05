@@ -21,4 +21,5 @@ public class Grades {
 
     public void setServiceGrade(Double serviceGrade) {this.serviceGrade = serviceGrade;}
 
+
 }
