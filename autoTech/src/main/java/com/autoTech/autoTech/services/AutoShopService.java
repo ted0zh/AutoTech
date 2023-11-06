@@ -1,20 +1,23 @@
 package com.autoTech.autoTech.services;
 
-import com.autoTech.autoTech.Mapper.AutoShopMapper;
+import  com.autoTech.autoTech.Mapper.AutoShopMapper;
 import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.repositories.AutoShopRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
 
 
 @Service
-@Slf4j
 public class AutoShopService {
+    private static final Logger log = LoggerFactory.getLogger(AutoShopService.class);
+
     private final AutoShopRepo autoShopRepo;
     private final AutoShopMapper autoShopMapper;
 @Autowired

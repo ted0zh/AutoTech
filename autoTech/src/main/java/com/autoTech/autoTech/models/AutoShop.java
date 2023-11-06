@@ -3,7 +3,7 @@ package com.autoTech.autoTech.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "autoShop")
+@Table(name = "AutoShop")
 public class AutoShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
