@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 public class AutoShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Column(nullable = false , updatable = false)
     private Long id;
 
     @Column(name = "name")
