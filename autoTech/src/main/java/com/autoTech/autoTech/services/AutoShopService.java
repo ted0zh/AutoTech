@@ -4,7 +4,6 @@ import  com.autoTech.autoTech.Mapper.AutoShopMapper;
 import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.repositories.AutoShopRepo;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ public class AutoShopService {
 @Autowired
     public AutoShopService(AutoShopRepo autoShopRepo,AutoShopMapper mapper) {
         this.autoShopRepo = autoShopRepo;
-        this.autoShopMapper= mapper;
+        this.autoShopMapper = mapper;
     }
 
     public List<AutoShop> getAllShops(){
@@ -34,25 +33,25 @@ public class AutoShopService {
         Long id;
         if(dbObject.isPresent()) {
             id = dbObject.get().getId();
-            log.info("Updating AutoShop with id {}", id);
+            log.info("Updating autoShop with id {}", id);
         } else {
             id = null;
-            log.info("Inserting new AutoShop");
+            log.info("Inserting new autoShop");
         }
         AutoShop autoShop = autoShopMapper.convertDtoToEntity(autoShopDto, id);
         return autoShopRepo.saveAndFlush(autoShop);
 
 
-//        Optional<AutoShop> dbObject = autoShopRepo.findAutoShopByShopName(autoShopDto.getShopName());
-//        AutoShop autoShop = dbObject.orElseGet(AutoShop::new); // Use orElseGet
-//
-//        autoShop.setShopName(autoShopDto.getShopName());
-//        autoShop.setEmailShop(autoShopDto.getEmailShop());
-//        autoShop.setPhoneNumber(autoShopDto.getPhoneNumber());
-//        autoShop.setLocation(autoShopDto.getLocation()); // Correct the property name
-//        autoShop.setInfo(autoShopDto.getInfo());
-//
-//        return autoShopRepo.save(autoShop);
+    }
+    public void deleteAutoShop(Long id){
+        this.autoShopRepo.deleteById(id);
     }
 
+    public Optional<AutoShop> filterAutoShops(String shopName) {
+    return autoShopRepo.findAutoShopByShopName(shopName);
+    }
+
+//    public Optional<AutoShop> filterAutoShopsBySpecializations(String specialization) {
+//        return autoShopRepo.filterAutoShopsBySpecializations(specialization);
+//    }
 }

@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/shops")
 public class AutoShopController {
     private final AutoShopService autoShopService;
+
     @Autowired
     public AutoShopController(AutoShopService autoShopService) {
         this.autoShopService = autoShopService;
@@ -27,10 +29,25 @@ public class AutoShopController {
         AutoShop savedInDb = autoShopService.saveShop(autoShopDto);
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
-//    @GetMapping("/filter")
-//    public List<AutoShop> filterShops(String serviceSpec){
-//        return autoShopService
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAutoShop(@PathVariable("id") Long id) {
+        autoShopService.deleteAutoShop(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/{name}")
+    public Optional<AutoShop> filterAutoShops(@PathVariable("name") String shopName) {
+
+        return autoShopService.filterAutoShops(shopName);
+
+    }
+//    @GetMapping("/filter/{specialization}")
+//    public Optional<AutoShop> filterAutoShopsBySpecializations(@PathVariable("specialization") String specialization) {
+//
+//        return autoShopService.filterAutoShopsBySpecializations(specialization);
+//
 //    }
+
 
 
 }

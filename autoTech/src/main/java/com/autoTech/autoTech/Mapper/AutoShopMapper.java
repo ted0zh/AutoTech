@@ -14,8 +14,3 @@ public interface AutoShopMapper {
     @Mapping(target = "info", source = "dto.info")
     AutoShop convertDtoToEntity(AutoShopDto dto, Long id);
 }
-//    private String shopName;
-//    private String emailShop;
-//    private String phoneNumber;
-//    private String location;
-//    private String info;

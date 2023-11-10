@@ -2,11 +2,14 @@ package com.autoTech.autoTech.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "AutoShop")
 public class AutoShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false , updatable = false)
     private Long id;
 
     @Column(name = "name")
@@ -23,6 +26,13 @@ public class AutoShop {
 
     @Column(name = "info")
     private String info;
+    @ManyToMany
+    @JoinTable(
+            name = "shop_specialization",
+            joinColumns=@JoinColumn(name="shop_id"),
+            inverseJoinColumns = @JoinColumn(name = "specialization_id")
+    )
+    private Set<Specializations>specializations;
 
     public String getShopName() {
         return shopName;
