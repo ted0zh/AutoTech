@@ -2,9 +2,11 @@ package com.autoTech.autoTech.models;
 
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "users")
+@Data
 public class Users {
 
 

@@ -1,9 +1,11 @@
 package com.autoTech.autoTech.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "grades")
+@Data
 public class Grades {
 
     @Id

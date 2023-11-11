@@ -29,7 +29,7 @@ public class AutoShopService {
         return autoShopRepo.findAll();
     }
     public AutoShop saveShop(AutoShopDto autoShopDto) {
-        Optional<AutoShop> dbObject = autoShopRepo.findAutoShopByShopName(autoShopDto.getShopName());
+        Optional<AutoShop> dbObject = autoShopRepo.findAutoShopByShopName(autoShopDto.shopName());
         Long id;
         if(dbObject.isPresent()) {
             id = dbObject.get().getId();
@@ -40,8 +40,6 @@ public class AutoShopService {
         }
         AutoShop autoShop = autoShopMapper.convertDtoToEntity(autoShopDto, id);
         return autoShopRepo.saveAndFlush(autoShop);
-
-
     }
     public void deleteAutoShop(Long id){
         this.autoShopRepo.deleteById(id);

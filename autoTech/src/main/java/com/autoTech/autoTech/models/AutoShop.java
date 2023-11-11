@@ -1,11 +1,13 @@
 package com.autoTech.autoTech.models;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "AutoShop")
+@Data
 public class AutoShop {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +35,14 @@ public class AutoShop {
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
     private Set<Specializations>specializations;
+
+    public Set<Specializations> getSpecializations() {
+        return specializations;
+    }
+
+    public void setSpecializations(Set<Specializations> specializations) {
+        this.specializations = specializations;
+    }
 
     public String getShopName() {
         return shopName;
