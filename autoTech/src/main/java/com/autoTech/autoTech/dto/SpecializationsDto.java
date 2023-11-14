@@ -1,4 +1,4 @@
 package com.autoTech.autoTech.dto;
 
-public record SpecializationsDto (String serviceSpec){
+public record SpecializationsDto (String specialization){
 }

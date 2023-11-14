@@ -14,7 +14,7 @@ public class Specializations {
 
 
     @Column(name = "specialization")
-    private String specializationName;
+    private String specialization;
     // service_specialization
 
     public String getSpecialization() {
@@ -26,7 +26,16 @@ public class Specializations {
     }
 
 
-    public Specializations(String specializationName) {
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+
+    public Specializations() {
     }
 
 
