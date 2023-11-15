@@ -31,4 +31,22 @@ public class ShopSpecializationController {
         Specializations savedInDb = specializationService.saveSpecialization(dto);
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
+
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<?> deleteSpecializations(@PathVariable("id") Long id) {
+//        this.specializationService.deleteSpecialization(id);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+//
+
+    @DeleteMapping("/delete/{specialization}")
+    public ResponseEntity<?> deleteSpecialization(@PathVariable("specialization") String specialization) {
+        specializationService.deleteBySpecialization(specialization);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/filter/{specialization}")
+    public Optional<Specializations> filterSpecializationType(@PathVariable("specialization") String specialization) {
+        return specializationService.filterSpecializations(specialization);
+    }
 }
