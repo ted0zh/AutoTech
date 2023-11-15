@@ -17,14 +17,6 @@ public class Specializations {
     private String specialization;
     // service_specialization
 
-    public String getSpecialization() {
-        return specializationName;
-    }
-
-    public void setSpecialization(String specialization) {
-        this.specializationName = specialization;
-    }
-
 
     public String getSpecialization() {
         return specialization;
