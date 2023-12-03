@@ -4,6 +4,7 @@ import com.autoTech.autoTech.Mapper.SpecializationMapper;
 import com.autoTech.autoTech.dto.SpecializationsDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.models.Specializations;
+import com.autoTech.autoTech.repositories.AutoShopRepo;
 import com.autoTech.autoTech.repositories.SpecializationsRepo;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -56,5 +57,7 @@ public class SpecializationService {
     public Optional<Specializations> filterSpecializations(String specialization) {
         return this.specializationsRepo.findSpecializationBySpecialization(specialization);
     }
+
+
 
 }
