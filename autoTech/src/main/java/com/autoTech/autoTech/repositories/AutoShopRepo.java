@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface AutoShopRepo extends JpaRepository<AutoShop,Long> {
     Optional<AutoShop> findAutoShopByShopName(String shopName);
     //@Query("SELECT a FROM AutoShop a WHERE a.service_specialization =: specialization")
-    //Optional<AutoShop> filterAutoShopsBySpecializations(/*@Param("specialization")*/ String specialization);
+    //Optional<AutoShop> filterAutoShopsBySpecializations(@Param("specialization") String specialization);
 
 }

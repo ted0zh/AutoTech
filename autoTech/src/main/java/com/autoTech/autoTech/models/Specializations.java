@@ -1,5 +1,6 @@
 package com.autoTech.autoTech.models;
 
+import com.autoTech.autoTech.enums.SpecializationEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,11 +13,8 @@ public class Specializations {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-
     @Column(name = "specialization")
     private String specialization;
-    // service_specialization
-
 
     public String getSpecialization() {
         return specialization;
@@ -25,6 +23,19 @@ public class Specializations {
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
+//    @Column(name = "specialization")
+//    @Enumerated(EnumType.STRING)
+//    private SpecializationEnum specialization;
+//    // service_specialization
+
+
+//    public SpecializationEnum getSpecialization() {
+//        return specialization;
+//    }
+//
+//    public void setSpecialization(SpecializationEnum specialization) {
+//        this.specialization = specialization;
+//    }
 
 
     public Specializations() {

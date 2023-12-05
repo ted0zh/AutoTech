@@ -4,6 +4,8 @@ package com.autoTech.autoTech.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "users")
 @Data
@@ -26,6 +28,8 @@ public class Users {
     @Column(name = "user_number")
     private String userNumber; // user_number
 
+    @OneToMany(mappedBy = "users")
+    Set<Grades> ratings;
     public String getFirstName() {
         return firstName;
     }

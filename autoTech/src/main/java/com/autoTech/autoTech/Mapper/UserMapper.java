@@ -1,5 +1,4 @@
 package com.autoTech.autoTech.Mapper;
-
 import com.autoTech.autoTech.dto.UserDto;
 import com.autoTech.autoTech.models.Users;
 import org.mapstruct.Mapper;

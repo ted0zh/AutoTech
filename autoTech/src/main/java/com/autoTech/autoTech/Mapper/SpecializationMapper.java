@@ -1,6 +1,4 @@
 package com.autoTech.autoTech.Mapper;
-
-import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.dto.SpecializationsDto;
 import com.autoTech.autoTech.models.Specializations;
 import org.mapstruct.Mapper;
