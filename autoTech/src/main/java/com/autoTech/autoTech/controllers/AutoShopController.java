@@ -1,8 +1,10 @@
 package com.autoTech.autoTech.controllers;
 
 import com.autoTech.autoTech.dto.AutoShopDto;
+import com.autoTech.autoTech.dto.SpecialiazationRequestDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.services.AutoShopService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,6 +67,36 @@ public ResponseEntity<Map<String, Object>> fetch(
     );
     return new ResponseEntity<>(response, HttpStatus.OK);
 }
+
+    @GetMapping("/page/shops")
+    public ResponseEntity<Map<String, Object>> fetch(
+            @RequestParam(required = false, defaultValue = "1") int currentPage,
+            @RequestParam(required = false, defaultValue = "2") int perPage
+    ) {
+        Pageable pageable = PageRequest.of(currentPage - 1, perPage);
+        Page<AutoShop> page = autoShopService.getAllShops(pageable);
+        Map<String, Object> response = Map.of(
+                "auto-shops", page.getContent(),
+                "totalPages", page.getTotalPages(),
+                "totalElements", page.getTotalElements()
+        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    @PutMapping("/{shopId}/specifications/{specificationId}")
+   // @PutMapping("/addSpecializationToShop")
+    public ResponseEntity<?> addSpecializationToAutoShop(@PathVariable Long shopId, @PathVariable Long specializationId) {
+        //public ResponseEntity<?> addSpecializationToAutoShop(@RequestBody SpecialiazationRequestDto dto){
+        try {
+            autoShopService.addSpecializationToAutoShop(shopId,specializationId);
+            //autoShopService.addSpecializationToAutoShop(dto.getShopId(),dto.getSpecializationId());
+            return ResponseEntity.ok().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+
+    }
 
 
 

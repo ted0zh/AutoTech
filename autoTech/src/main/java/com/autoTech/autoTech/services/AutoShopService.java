@@ -5,8 +5,6 @@ import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.repositories.AutoShopRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,13 +49,6 @@ public class AutoShopService {
     return autoShopRepo.findAutoShopByShopName(shopName);
     }
 
-    public Page<AutoShop> getAllShops(Pageable pageable) {
-            return autoShopRepo.findAll(pageable);
-    }
-
-    public void addSpecificationToAutoShop(Long shop_id){
-
-    }
 //    public Optional<AutoShop> filterAutoShopsBySpecializations(String specialization) {
 //        return autoShopRepo.filterAutoShopsBySpecializations(specialization);
 //    }
