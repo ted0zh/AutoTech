@@ -1,9 +1,5 @@
 package com.autoTech.autoTech.controllers;
-
-
-import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.dto.UserDto;
-import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.models.Users;
 import com.autoTech.autoTech.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -53,6 +53,20 @@ public class AutoShopController {
 //        return autoShopService.filterAutoShopsBySpecializations(specialization);
 //
 //    }
+@GetMapping("/page/shops")
+public ResponseEntity<Map<String, Object>> fetch(
+        @RequestParam(required = false, defaultValue = "1") int currentPage,
+        @RequestParam(required = false, defaultValue = "2") int perPage
+) {
+    Pageable pageable = PageRequest.of(currentPage - 1, perPage);
+    Page<AutoShop> page = autoShopService.getAllShops(pageable);
+    Map<String, Object> response = Map.of(
+            "auto-shops", page.getContent(),
+            "totalPages", page.getTotalPages(),
+            "totalElements", page.getTotalElements()
+    );
+    return new ResponseEntity<>(response, HttpStatus.OK);
+}
 
     @GetMapping("/page/shops")
     public ResponseEntity<Map<String, Object>> fetch(

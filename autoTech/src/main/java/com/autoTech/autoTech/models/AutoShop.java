@@ -28,6 +28,9 @@ public class AutoShop {
 
     @Column(name = "info")
     private String info;
+
+    @OneToMany(mappedBy = "autoShop")
+    Set<Grades> ratings;
     @ManyToMany
     @JoinTable(
             name = "shop_specialization",
