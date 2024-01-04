@@ -3,9 +3,7 @@ package com.autoTech.autoTech.AutoShopMapperTest;
 import com.autoTech.autoTech.Mapper.AutoShopMapper;
 import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.models.AutoShop;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

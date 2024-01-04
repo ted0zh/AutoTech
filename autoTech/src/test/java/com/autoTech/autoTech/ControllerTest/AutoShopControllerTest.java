@@ -96,7 +96,6 @@ public class AutoShopControllerTest {
     public void deleteAutoShopShouldReturnStatusOk() throws Exception {
         Long shopId = 1L;
         doNothing().when(autoShopService).deleteAutoShop(shopId);
-
         mockMvc.perform(delete("/shops/delete/{id}", shopId))
                 .andExpect(status().isOk());
 
