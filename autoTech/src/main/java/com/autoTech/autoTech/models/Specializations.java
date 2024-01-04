@@ -23,19 +23,7 @@ public class Specializations {
     public void setSpecialization(String specialization) {
         this.specialization = specialization;
     }
-//    @Column(name = "specialization")
-//    @Enumerated(EnumType.STRING)
-//    private SpecializationEnum specialization;
-//    // service_specialization
 
-
-//    public SpecializationEnum getSpecialization() {
-//        return specialization;
-//    }
-//
-//    public void setSpecialization(SpecializationEnum specialization) {
-//        this.specialization = specialization;
-//    }
 
 
     public Specializations() {

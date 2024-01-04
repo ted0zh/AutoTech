@@ -4,107 +4,119 @@ import com.autoTech.autoTech.controllers.ShopSpecializationController;
 import com.autoTech.autoTech.dto.SpecializationsDto;
 import com.autoTech.autoTech.models.Specializations;
 import com.autoTech.autoTech.services.SpecializationService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.*;
+
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 
-@RunWith(SpringRunner.class)
-@WebMvcTest(ShopSpecializationController.class)
+@ExtendWith(MockitoExtension.class)
 public class SpecializationControllerTest {
-            @Autowired
-        private MockMvc mockMvc;
 
-        @MockBean
-        private SpecializationService specializationService;
+    @Mock
+    private SpecializationService specializationService;
 
-        @InjectMocks
-        private ShopSpecializationController shopSpecializationController;
+    @InjectMocks
+    private ShopSpecializationController shopSpecializationController;
 
-        @Before
-        public void setUp() {
-            MockitoAnnotations.initMocks(this);
-        }
+    private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
 
-        @Test
-        public void getAllSpecializationsTest() throws Exception {
-            List<Specializations> specializationsList = Arrays.asList(
-                    new Specializations(), // Assuming constructor accepts the specialization name
-                    new Specializations()
-            );
+    @BeforeEach
+    public void setUp() {
+        mockMvc = MockMvcBuilders.standaloneSetup(shopSpecializationController).build();
+        objectMapper = new ObjectMapper();
+    }
 
-            when(specializationService.getAllSpecializations()).thenReturn(specializationsList);
+    @Test
+    public void getAllSpecializations_ShouldReturnList() throws Exception {
+        List<Specializations> specializations = Arrays.asList(
+                new Specializations(){{
+                    setId(4L);
+                    setSpecialization("tyres");
+                }},
+                new Specializations()
+                {{
+                    setId(7L);
+                    setSpecialization("engine");
+                }}
+        );
 
-            mockMvc.perform(get("/specialization/fetch"))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$", hasSize(2)))
-                    .andExpect(jsonPath("$[0].specialization", is("tyres")))
-                    .andExpect(jsonPath("$[1].specialization", is("engine")));
+        given(specializationService.getAllSpecializations()).willReturn(specializations);
 
-            verify(specializationService).getAllSpecializations();
-        }
+        mockMvc.perform(get("/specialization/fetch"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is(specializations.get(0).getId().intValue())))
+                .andExpect(jsonPath("$[0].specialization", is(specializations.get(0).getSpecialization())));
 
-        @Test
-        public void saveSpecializationTest() throws Exception {
-            SpecializationsDto dto = new SpecializationsDto("brakes");
-            Specializations savedSpecialization = new Specializations();
-            savedSpecialization.setId(3L); // Assuming the ID is set after saving
+        verify(specializationService, times(1)).getAllSpecializations();
+    }
 
-            when(specializationService.saveSpecialization(any()))
-                    .thenReturn(savedSpecialization);
+    @Test
+    public void saveSpecialization_ShouldReturnCreatedSpecialization() throws Exception {
+        SpecializationsDto dto = new SpecializationsDto("brakes");
+        Specializations savedSpecialization = new Specializations() {{
+            setId(1L);
+            setSpecialization("brakes");
+        }};
 
-            mockMvc.perform(post("/specialization/save")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content("{\"specialization\":\"brakes\"}"))
-                    .andExpect(status().isCreated())
-                    .andExpect(jsonPath("$.id", is(3)))
-                    .andExpect(jsonPath("$.specialization", is("brakes")));
+        given(specializationService.saveSpecialization(any(SpecializationsDto.class))).willReturn(savedSpecialization);
 
-            verify(specializationService).saveSpecialization(any());
-        }
+        mockMvc.perform(post("/specialization/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(dto)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", is(savedSpecialization.getId().intValue())))
+                .andExpect(jsonPath("$.specialization", is(savedSpecialization.getSpecialization())));
 
-        @Test
-        public void deleteSpecializationTest() throws Exception {
-            String specialization = "brakes";
+        verify(specializationService, times(1)).saveSpecialization(any(SpecializationsDto.class));
+    }
 
-            doNothing().when(specializationService).deleteBySpecialization(specialization);
+    @Test
+    public void deleteSpecialization_ShouldReturnOkStatus() throws Exception {
+        String specialization = "tyres";
 
-            mockMvc.perform(delete("/specialization/delete/{specialization}", specialization))
-                    .andExpect(status().isOk());
+        doNothing().when(specializationService).deleteBySpecialization(specialization);
 
-            verify(specializationService).deleteBySpecialization(specialization);
-        }
+        mockMvc.perform(delete("/specialization/delete/{specialization}", specialization))
+                .andExpect(status().isOk());
 
-        @Test
-        public void filterSpecializationTypeTest() throws Exception {
-            String specialization = "brakes";
-            Specializations specializations = new Specializations();
-            specializations.setId(3L);
+        verify(specializationService, times(1)).deleteBySpecialization(specialization);
+    }
 
-            when(specializationService.filterSpecializations(specialization)).thenReturn(Optional.of(specializations));
+    @Test
+    public void filterSpecializationType_ShouldReturnSpecialization() throws Exception {
+        String specialization = "engine";
+        Specializations specializations = new Specializations(){{
+            setId(7L);
+            setSpecialization("engine");
+        }};
 
-            mockMvc.perform(get("/specialization/filter/{specialization}", specialization))
-                    .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.id", is(3)))
-                    .andExpect(jsonPath("$.specialization", is(specialization)));
+        given(specializationService.filterSpecializations(specialization)).willReturn(Optional.of(specializations));
 
-            verify(specializationService).filterSpecializations(specialization);
-        }
+        mockMvc.perform(get("/specialization/filter/{specialization}", specialization))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(specializations.getId().intValue())))
+                .andExpect(jsonPath("$.specialization", is(specializations.getSpecialization())));
+
+        verify(specializationService, times(1)).filterSpecializations(specialization);
+    }
 }
