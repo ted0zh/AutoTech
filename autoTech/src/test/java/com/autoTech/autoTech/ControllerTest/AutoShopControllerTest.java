@@ -1,80 +1,95 @@
 package com.autoTech.autoTech.ControllerTest;
 
-
+import com.autoTech.autoTech.controllers.AutoShopController;
 import com.autoTech.autoTech.dto.AutoShopDto;
 import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.services.AutoShopService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static java.lang.reflect.Array.get;
-import static net.bytebuddy.matcher.ElementMatchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.springframework.http.RequestEntity.post;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-@WebMvcTest()
+import static org.mockito.Mockito.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.hasSize;
+@ExtendWith(MockitoExtension.class)
 public class AutoShopControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
+    @Mock
     private AutoShopService autoShopService;
 
-    @Before
-    public void setUp() {
-        MockitoAnnotations.initMocks(this);
+    @InjectMocks
+    private AutoShopController autoShopController;
+
+    private MockMvc mockMvc;
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    public void setup() {
+        objectMapper = new ObjectMapper();
+        mockMvc = MockMvcBuilders.standaloneSetup(autoShopController).build();
     }
 
     @Test
     public void fetchAutoShopsShouldReturnAutoShops() throws Exception {
-        List<AutoShop> autoShops = Arrays.asList(new AutoShop(/* Initialize fields */), new AutoShop(/* Initialize fields */));
+        List<AutoShop> autoShops = Collections.singletonList(new AutoShop(){{
+            setId(1L);
+            setShopName("NSN");
+            setEmailShop("nsn.tuning@abv.bg");
+            setPhoneNumber("0888555555");
+            setLocation("Sofia");
+            setInfo("Newbies");
+        }});
         when(autoShopService.getAllShops()).thenReturn(autoShops);
 
-//        mockMvc.perform(get("/shops/fetch"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$", hasSize(autoShops.size())))
-//                .andExpect(jsonPath("$[0].name", is(autoShops.get(0).getShopName()))); // Assuming there is a getName method
+        mockMvc.perform(get("/shops/fetch"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].shopName", is(autoShops.get(0).getShopName())));
 
-        verify(autoShopService).getAllShops();
+        verify(autoShopService, times(1)).getAllShops();
     }
 
     @Test
     public void saveAutoShopShouldReturnSavedAutoShop() throws Exception {
-        AutoShopDto autoShopDto = new AutoShopDto("Alien","alien@abv.bg","213415","Sofia","newbies");
-        AutoShop autoShop = new AutoShop(/* Initialize fields */);
+        AutoShopDto autoShopDto = new AutoShopDto("G34", "G34@example.com",
+                "1234567890", "Sofia", "Newbies");
+        AutoShop autoShop = new AutoShop(){{
+            setId(3L);
+            setShopName("G34");
+            setEmailShop("G34@example.com");
+            setPhoneNumber("1234567890");
+            setLocation("Sofia");
+            setInfo("Newbies");
+        }};
         when(autoShopService.saveShop(any(AutoShopDto.class))).thenReturn(autoShop);
 
-//        mockMvc.perform(post("/shops/save")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(/* Convert autoShopDto to JSON */))
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.name", is(autoShop.getShopName()))); // Assuming there is a getName method
 
-        verify(autoShopService).saveShop(any(AutoShopDto.class));
+        mockMvc.perform(post("/shops/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(autoShopDto)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.shopName", is(autoShop.getShopName())));
+
+        verify(autoShopService, times(1)).saveShop(any(AutoShopDto.class));
     }
 
     @Test
@@ -85,38 +100,64 @@ public class AutoShopControllerTest {
         mockMvc.perform(delete("/shops/delete/{id}", shopId))
                 .andExpect(status().isOk());
 
-        verify(autoShopService).deleteAutoShop(shopId);
+        verify(autoShopService, times(1)).deleteAutoShop(shopId);
     }
 
     @Test
     public void filterAutoShopsShouldReturnAutoShop() throws Exception {
-        String shopName = "AutoShopName";
-        AutoShop autoShop = new AutoShop(/* Initialize fields */);
+        String shopName = "G34";
+        AutoShop autoShop = new AutoShop(){{
+                setId(3L);
+                setShopName("G34");
+                setEmailShop("G34@example.com");
+                setPhoneNumber("1234567890");
+                setLocation("Sofia");
+                setInfo("Newbies");
+        }};
         when(autoShopService.filterAutoShops(shopName)).thenReturn(Optional.of(autoShop));
 
-//        mockMvc.perform(get("/shops/filter/{name}", shopName))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.name", is(autoShop.getShopName()))); // Assuming there is a getName method
+        mockMvc.perform(get("/shops/filter/{name}", shopName))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.shopName", is(shopName)));
 
-        verify(autoShopService).filterAutoShops(shopName);
+        verify(autoShopService, times(1)).filterAutoShops(shopName);
     }
 
     @Test
     public void fetchAutoShopsPageableShouldReturnPage() throws Exception {
-        Pageable pageable = PageRequest.of(0, 2);
-        List<AutoShop> autoShopList = Arrays.asList(new AutoShop(/* Initialize fields */), new AutoShop(/* Initialize fields */));
+        // Arrange
+        int currentPage = 1;
+        int perPage = 2;
+        Pageable pageable = PageRequest.of(currentPage - 1, perPage);
+        List<AutoShop> autoShopList = Arrays.asList(
+                new AutoShop(){{
+                    setId(1L);
+                    setShopName("NSN");
+                    setEmailShop("nsn.tuning@abv.bg");
+                    setPhoneNumber("0888555555");
+                    setLocation("Sofia");
+                    setInfo("Newbies");
+                }},
+                new AutoShop(){{
+                    setId(2L);
+                    setShopName("Adler");
+                    setEmailShop("adler.tuning@abv.bg");
+                    setPhoneNumber("0887578555");
+                    setLocation("Sofia");
+                    setInfo("Veterans");
+                }}
+        );
         Page<AutoShop> autoShopPage = new PageImpl<>(autoShopList, pageable, autoShopList.size());
-        when(autoShopService.getAllAutoShops(any(Pageable.class))).thenReturn(autoShopPage);
+        when(autoShopService.getAllAutoShops(pageable)).thenReturn(autoShopPage);
 
-//        mockMvc.perform(MockMvcRequestBuilders.get("/shops/page/shops")
-//                        .param("currentPage", "1")
-//                        .param("perPage", "2"))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.totalPages", is(autoShopPage.getTotalPages())))
-//                .andExpect(jsonPath("$.totalElements", is((int) autoShopPage.getTotalElements())))
-//                .andExpect(jsonPath("$.auto-shops", hasSize(autoShopList.size())));
+        mockMvc.perform(get("/shops/page/shops")
+                        .param("currentPage", String.valueOf(currentPage))
+                        .param("perPage", String.valueOf(perPage)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.auto-shops", hasSize(perPage)))
+                .andExpect(jsonPath("$.totalPages", is(autoShopPage.getTotalPages())))
+                .andExpect(jsonPath("$.totalElements", is((int) autoShopPage.getTotalElements())));
 
-        verify(autoShopService).getAllAutoShops(any(Pageable.class));
+        verify(autoShopService, times(1)).getAllAutoShops(pageable);
     }
-
 }

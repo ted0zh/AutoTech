@@ -8,44 +8,25 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mapstruct.factory.Mappers;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.stream.Stream;
+     class AutoShopMapperTest {
 
-import static org.assertj.core.api.Assertions.assertThat;
+         private AutoShopMapper mapper = Mappers.getMapper(AutoShopMapper.class);
 
- class AutoShopMapperTest {
+         @Test
+         void testConvertDtoToEntity() {
+             AutoShopDto dto = new AutoShopDto("NSN", "nsn.tuning@abv.bg", "0888555555", "Sofia", "Newbies");
 
-     private final AutoShopMapper underTest = Mappers.getMapper(AutoShopMapper.class);
+             AutoShop autoShop = mapper.convertDtoToEntity(dto, 1L);
 
-     @ParameterizedTest
-     @MethodSource("paramProvider")
-     void ConvertDtoToEntityTest(AutoShopDto autoShopDto, String[] emptyFields) {
-         AutoShop autoshopResult = underTest.convertDtoToEntity(autoShopDto, 2L);
-         assertThat(autoshopResult)
-                 .isNotNull()
-                 .hasAllNullFieldsOrPropertiesExcept(emptyFields);
+             assertEquals("NSN", autoShop.getShopName());
+             assertEquals("nsn.tuning@abv.bg", autoShop.getEmailShop());
+             assertEquals("0888555555", autoShop.getPhoneNumber());
+             assertEquals("Sofia", autoShop.getLocation());
+             assertEquals("Newbies", autoShop.getInfo());
+             assertEquals(1L, autoShop.getId());
+         }
      }
-
-
-
-
-
-     private static Stream<Arguments> paramProvider(){
-         return Stream.of(
-                 Arguments.of(
-                         new AutoShopDto("MedinaMed","null", "null", "null", "null"),
-                         new String[] { "emailShop", "phoneNumber", "location", "info" }
-                 ),
-                 Arguments.of(
-                         new AutoShopDto("MedinaMed","medinamed@gmail.com", "null", "null", "null"),
-                         new String[] { "phoneNumber", "location", "info" }
-                 ),
-                 Arguments.of(
-                         new AutoShopDto("MedinaMed","null", "089654123", "null", "null"),
-                         new String[] { "emailShop", "location", "info" }
-                 )
-         );
-     }
- }
 
 
