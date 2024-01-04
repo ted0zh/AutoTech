@@ -46,12 +46,7 @@ public class AutoShopController {
         return autoShopService.filterAutoShops(shopName);
 
     }
-//    @GetMapping("/filter/{specialization}")
-//    public Optional<AutoShop> filterAutoShopsBySpecializations(@PathVariable("specialization") String specialization) {
-//
-//        return autoShopService.filterAutoShopsBySpecializations(specialization);
-//
-//    }
+
 @GetMapping("/page/shops")
 public ResponseEntity<Map<String, Object>> fetch(
         @RequestParam(required = false, defaultValue = "1") int currentPage,
@@ -67,12 +62,12 @@ public ResponseEntity<Map<String, Object>> fetch(
     return new ResponseEntity<>(response, HttpStatus.OK);
 }
     @PutMapping("/{shopId}/specifications/{specializationId}")
-   // @PutMapping("/addSpecializationToShop")
+
     public ResponseEntity<?> addSpecializationToAutoShop(@PathVariable Long shopId, @PathVariable Long specializationId) {
-        //public ResponseEntity<?> addSpecializationToAutoShop(@RequestBody SpecialiazationRequestDto dto){
+
         try {
             autoShopService.addSpecializationToAutoShop(shopId,specializationId);
-            //autoShopService.addSpecializationToAutoShop(dto.getShopId(),dto.getSpecializationId());
+
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

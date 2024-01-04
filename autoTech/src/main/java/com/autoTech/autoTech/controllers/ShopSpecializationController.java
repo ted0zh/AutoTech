@@ -2,7 +2,6 @@ package com.autoTech.autoTech.controllers;
 
 
 import com.autoTech.autoTech.dto.SpecializationsDto;
-import com.autoTech.autoTech.models.AutoShop;
 import com.autoTech.autoTech.models.Specializations;
 import com.autoTech.autoTech.services.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/specialization")
-//@CrossOrigin("*")
 public class ShopSpecializationController {
 
     private final SpecializationService specializationService;
