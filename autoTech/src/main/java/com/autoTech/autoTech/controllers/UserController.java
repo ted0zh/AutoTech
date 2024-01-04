@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -15,6 +17,11 @@ public class UserController {
 
     @Autowired
     public UserController(UserService userService) {this.userService = userService;}
+
+    @GetMapping("/fetch")
+    public List<Users> findAllUsers() {
+        return userService.findAllUsers();
+    }
 
     @PostMapping("/saveUser")
     public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
@@ -27,5 +34,7 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 
 }

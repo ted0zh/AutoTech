@@ -35,13 +35,6 @@ public class ShopSpecializationController {
         return new ResponseEntity<>(savedInDb, HttpStatus.CREATED);
     }
 
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity<?> deleteSpecializations(@PathVariable("id") Long id) {
-//        this.specializationService.deleteSpecialization(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-
     @DeleteMapping("/delete/{specialization}")
     public ResponseEntity<?> deleteSpecialization(@PathVariable("specialization") String specialization) {
         specializationService.deleteBySpecialization(specialization);
