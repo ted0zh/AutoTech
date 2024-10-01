@@ -1,10 +1,9 @@
 package com.autoTech.autoTech.AutoShopRepoTest;
-import com.autoTech.autoTech.models.AutoShop;
+import com.autoTech.autoTech.data.models.AutoShop;
 import com.autoTech.autoTech.repositories.AutoShopRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.test.context.jdbc.Sql;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Optional;

@@ -1,6 +1,6 @@
-package com.autoTech.autoTech.Mapper;
-import com.autoTech.autoTech.dto.AutoShopDto;
-import com.autoTech.autoTech.models.AutoShop;
+package com.autoTech.autoTech.data.mapper;
+import com.autoTech.autoTech.data.dto.AutoShopDto;
+import com.autoTech.autoTech.data.models.AutoShop;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingConstants;

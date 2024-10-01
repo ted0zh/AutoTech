@@ -1,7 +1,7 @@
 package com.autoTech.autoTech.controllers;
 
-import com.autoTech.autoTech.dto.AutoShopDto;
-import com.autoTech.autoTech.models.AutoShop;
+import com.autoTech.autoTech.data.dto.AutoShopDto;
+import com.autoTech.autoTech.data.models.AutoShop;
 import com.autoTech.autoTech.services.AutoShopService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,9 @@
 package com.autoTech.autoTech.AutoShopMapperTest;
 
 
-import com.autoTech.autoTech.Mapper.UserMapper;
-import com.autoTech.autoTech.dto.UserDto;
-import com.autoTech.autoTech.models.Users;
+import com.autoTech.autoTech.data.mapper.UserMapper;
+import com.autoTech.autoTech.data.dto.UserDto;
+import com.autoTech.autoTech.data.models.Users;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 

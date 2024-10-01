@@ -1,6 +1,6 @@
 package com.autoTech.autoTech.AutoShopRepoTest;
 
-import com.autoTech.autoTech.models.Specializations;
+import com.autoTech.autoTech.data.models.Specializations;
 import com.autoTech.autoTech.repositories.SpecializationsRepo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
