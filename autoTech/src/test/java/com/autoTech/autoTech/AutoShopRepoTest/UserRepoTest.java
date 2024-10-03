@@ -1,6 +1,6 @@
 package com.autoTech.autoTech.AutoShopRepoTest;
 
-import com.autoTech.autoTech.models.Users;
+import com.autoTech.autoTech.data.models.Users;
 import com.autoTech.autoTech.repositories.UserRepo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

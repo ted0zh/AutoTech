@@ -1,4 +1,4 @@
-package com.autoTech.autoTech.models;
+package com.autoTech.autoTech.data.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

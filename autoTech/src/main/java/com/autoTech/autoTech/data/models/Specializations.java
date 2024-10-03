@@ -1,6 +1,5 @@
-package com.autoTech.autoTech.models;
+package com.autoTech.autoTech.data.models;
 
-import com.autoTech.autoTech.enums.SpecializationEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 

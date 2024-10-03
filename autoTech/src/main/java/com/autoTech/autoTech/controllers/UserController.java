@@ -1,6 +1,6 @@
 package com.autoTech.autoTech.controllers;
-import com.autoTech.autoTech.dto.UserDto;
-import com.autoTech.autoTech.models.Users;
+import com.autoTech.autoTech.data.dto.UserDto;
+import com.autoTech.autoTech.data.models.Users;
 import com.autoTech.autoTech.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -34,7 +34,4 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
-
 }

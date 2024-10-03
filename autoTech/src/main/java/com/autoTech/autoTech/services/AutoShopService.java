@@ -1,9 +1,9 @@
 package com.autoTech.autoTech.services;
 
-import  com.autoTech.autoTech.Mapper.AutoShopMapper;
-import com.autoTech.autoTech.dto.AutoShopDto;
-import com.autoTech.autoTech.models.AutoShop;
-import com.autoTech.autoTech.models.Specializations;
+import com.autoTech.autoTech.data.mapper.AutoShopMapper;
+import com.autoTech.autoTech.data.dto.AutoShopDto;
+import com.autoTech.autoTech.data.models.AutoShop;
+import com.autoTech.autoTech.data.models.Specializations;
 import com.autoTech.autoTech.repositories.AutoShopRepo;
 import com.autoTech.autoTech.repositories.SpecializationsRepo;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,17 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class AutoShopService {
-    private static final Logger log = LoggerFactory.getLogger(AutoShopService.class);
-
     private final AutoShopRepo autoShopRepo;
     private final SpecializationsRepo specializationsRepo;
     private final AutoShopMapper autoShopMapper;
@@ -42,10 +36,8 @@ public class AutoShopService {
         Long id;
         if(dbObject.isPresent()) {
             id = dbObject.get().getId();
-            log.info("Updating autoShop with id {}", id);
         } else {
             id = null;
-            log.info("Inserting new autoShop");
         }
         AutoShop autoShop = autoShopMapper.convertDtoToEntity(autoShopDto, id);
         return autoShopRepo.saveAndFlush(autoShop);

@@ -1,8 +1,8 @@
 package com.autoTech.autoTech.ControllerTest;
 
 import com.autoTech.autoTech.controllers.UserController;
-import com.autoTech.autoTech.dto.UserDto;
-import com.autoTech.autoTech.models.Users;
+import com.autoTech.autoTech.data.dto.UserDto;
+import com.autoTech.autoTech.data.models.Users;
 import com.autoTech.autoTech.services.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

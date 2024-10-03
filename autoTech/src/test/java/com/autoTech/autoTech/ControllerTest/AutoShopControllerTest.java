@@ -1,8 +1,8 @@
 package com.autoTech.autoTech.ControllerTest;
 
 import com.autoTech.autoTech.controllers.AutoShopController;
-import com.autoTech.autoTech.dto.AutoShopDto;
-import com.autoTech.autoTech.models.AutoShop;
+import com.autoTech.autoTech.data.dto.AutoShopDto;
+import com.autoTech.autoTech.data.models.AutoShop;
 import com.autoTech.autoTech.services.AutoShopService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;

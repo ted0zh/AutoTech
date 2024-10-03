@@ -1,4 +1,4 @@
-package com.autoTech.autoTech.dto;
+package com.autoTech.autoTech.data.dto;
 
 public record GradesDto(Double serviceGrade) {
 }

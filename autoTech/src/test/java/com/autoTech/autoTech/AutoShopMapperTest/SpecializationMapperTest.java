@@ -1,8 +1,8 @@
 package com.autoTech.autoTech.AutoShopMapperTest;
 
-import com.autoTech.autoTech.Mapper.SpecializationMapper;
-import com.autoTech.autoTech.dto.SpecializationsDto;
-import com.autoTech.autoTech.models.Specializations;
+import com.autoTech.autoTech.data.mapper.SpecializationMapper;
+import com.autoTech.autoTech.data.dto.SpecializationsDto;
+import com.autoTech.autoTech.data.models.Specializations;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

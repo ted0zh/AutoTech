@@ -1,8 +1,8 @@
 package com.autoTech.autoTech.controllers;
 
 
-import com.autoTech.autoTech.dto.SpecializationsDto;
-import com.autoTech.autoTech.models.Specializations;
+import com.autoTech.autoTech.data.dto.SpecializationsDto;
+import com.autoTech.autoTech.data.models.Specializations;
 import com.autoTech.autoTech.services.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

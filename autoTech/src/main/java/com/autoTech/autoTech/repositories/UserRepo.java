@@ -1,6 +1,6 @@
 package com.autoTech.autoTech.repositories;
 
-import com.autoTech.autoTech.models.Users;
+import com.autoTech.autoTech.data.models.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
