@@ -3,6 +3,7 @@ package com.autoTech.autoTech.data.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,6 +39,9 @@ public class AutoShop {
             inverseJoinColumns = @JoinColumn(name = "specialization_id")
     )
     private Set<Specializations>specializations;
+
+//    @OneToMany(mappedBy = "autoShop")
+//    private List<Image> images;
 
     public Set<Specializations> getSpecializations() {
         return specializations;
